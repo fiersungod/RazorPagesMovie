@@ -1,23 +1,24 @@
 ﻿body {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: center; /* 水平方向居中 */
+    align-items: center; /* 垂直方向居中 */
     margin: 0;
     height: 100vh;
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
+    position:relative;
 }
 
 #image-container {
     width: 400px;
     height: 400px;
-    overflow: hidden;
+    overflow: auto;
     touch-action: none; /* 禁用瀏覽器默認手勢操作 */
-    border: 2px dashed #ccc;
+    border: 3px solid black; /* 黑色外框 */
     background: #fff;
-    position: relative;
+    position: relative; /* 保持图片移动绝对定位的基础 */
+    z-index: 10; /* 保证容器在顶层 */
 }
-
 
 #image {
     position: absolute;
@@ -31,18 +32,16 @@
 }
 
 #controls {
-    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    position: absolute;
+    bottom: -60px; /* 调整按钮显示在容器下方 */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20; /* 保证按钮层级高 */
 }
 
 button {
-    margin: 5px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-#complete-btn {
-    margin-top: 20px;
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
@@ -52,14 +51,35 @@ button {
     border-radius: 5px;
 }
 
-#complete-btn:hover {
-    background-color: #0056b3;
-}
+    button:hover {
+        background-color: #0056b3;
+    }
 
 #rotate-slider-container {
+    display: none; /* 默认隐藏旋转滑块 */
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
     margin-top: 10px;
+    z-index: 15; /* 滑块显示在较高层级 */
 }
 
 #rotate-slider {
     width: 300px;
 }
+
+#complete-btn {
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+    #complete-btn:hover {
+        background-color: #0056b3;
+    }

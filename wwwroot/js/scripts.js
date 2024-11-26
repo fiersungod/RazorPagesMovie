@@ -6,6 +6,8 @@ let startScale = 1; // 上次缩放的比例
 let currentX = 0, currentY = 0; // 图片偏移位置
 let startX = 0, startY = 0; // 上次图片位置
 let rotateAngle = 0;
+let flipHorizontal = 1; // 水平翻转，1 为正常，-1 为翻转
+let flipVertical = 1; // 垂直翻转，1 为正常，-1 为翻转
 let startTouches = []; // 开始触控点
 
 // 手勢處理
@@ -33,7 +35,7 @@ container.addEventListener('touchmove', (e) => {
         currentX = startX + dx;
         currentY = startY + dy;
 
-        image.style.transform = `translate(${currentX}px, ${currentY}px) scale(${scale})`;
+        updateImageTransform();
     } else if (e.touches.length === 2 && startTouches.length === 2) {
         // 双指缩放
         const distanceStart = Math.hypot(
@@ -46,7 +48,7 @@ container.addEventListener('touchmove', (e) => {
         );
 
         scale = Math.max(0.5, Math.min(2, startScale * (distanceNow / distanceStart))); // 限制缩放范围
-        image.style.transform = `translate(${currentX}px, ${currentY}px) scale(${scale})`;
+        updateImageTransform();
     }
 });
 
@@ -59,14 +61,14 @@ container.addEventListener('touchend', () => {
 
 // 上下翻轉
 document.getElementById("flip-vertical").addEventListener("click", () => {
-    const currentTransform = getComputedStyle(image).transform;
-    image.style.transform = currentTransform + " scaleY(-1)";
+    flipVertical *= -1; // 切换垂直翻转状态
+    updateImageTransform();
 });
 
 // 左右翻轉
 document.getElementById("flip-horizontal").addEventListener("click", () => {
-    const currentTransform = getComputedStyle(image).transform;
-    image.style.transform = currentTransform + " scaleX(-1)";
+    flipHorizontal *= -1; // 切换水平翻转状态
+    updateImageTransform();
 });
 
 // 旋轉
@@ -82,7 +84,7 @@ rotateButton.addEventListener("click", () => {
 
 rotateSlider.addEventListener("input", (e) => {
     rotateAngle = e.target.value;
-    image.style.transform = `rotate(${rotateAngle}deg) scale(${scale}) translate(${currentX}px, ${currentY}px)`;
+    updateImageTransform();
 });
 
 completeBtn.addEventListener('click', () => {
@@ -102,6 +104,12 @@ completeBtn.addEventListener('click', () => {
     const dWidth = imageRect.width / scale;
     const dHeight = imageRect.height / scale;
 
+    // 应用旋转
+    ctx.translate(canvas.width / 2, canvas.height / 2);
+    ctx.scale(flipHorizontal, flipVertical);
+    ctx.rotate((rotateAngle * Math.PI) / 180);
+    ctx.translate(-canvas.width / 2, -canvas.height / 2);
+
     // 绘制图片
     ctx.drawImage(image, dx, dy, dWidth, dHeight);
 
@@ -113,3 +121,11 @@ completeBtn.addEventListener('click', () => {
     link.click();
 });
 
+function updateImageTransform() {
+    image.style.transform = `
+        translate(${currentX}px, ${currentY}px) 
+        scale(${scale}) 
+        rotate(${rotateAngle}deg) 
+        scaleX(${flipHorizontal}) 
+        scaleY(${flipVertical})`;
+}
