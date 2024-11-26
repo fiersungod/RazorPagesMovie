@@ -9,7 +9,92 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
     <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="css/styles.css" />
+    <!--link rel="stylesheet" href="css/styles.css" /-->
+    <style>
+        body {
+            display: flex;
+            justify-content: center; /* 水平方向居中 */
+            align-items: center; /* 垂直方向居中 */
+            margin: 0;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            position: relative;
+        }
+
+        #image-container {
+            width: 400px;
+            height: 400px;
+            overflow: hidden;
+            touch-action: none; /* 禁用瀏覽器默認手勢操作 */
+            border: 3px solid black; /* 黑色外框 */
+            background: #fff;
+            position: relative; /* 保持图片移动绝对定位的基础 */
+            z-index: 10; /* 保证容器在顶层 */
+        }
+
+        #image {
+            position: relative;
+            transform-origin: center;
+            touch-action: none;
+            user-select: none;
+            transition: transform 0.3s ease;
+        }
+
+        #controls {
+            display: flex;
+            gap: 10px;
+            position: absolute;
+            bottom: -60px; /* 调整按钮显示在容器下方 */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20; /* 保证按钮层级高 */
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #FFFFFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+            button:hover {
+                background-color: #0056b3;
+            }
+
+        #rotate-slider-container {
+            display: none; /* 默认隐藏旋转滑块 */
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 10px;
+            z-index: 15; /* 滑块显示在较高层级 */
+        }
+
+        #rotate-slider {
+            width: 300px;
+        }
+
+        #complete-btn {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+            #complete-btn:hover {
+                background-color: #0056b3;
+            }
+
+    </style>
 </head>
 <body>
     <div id="image-container">

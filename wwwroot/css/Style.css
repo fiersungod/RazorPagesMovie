@@ -12,7 +12,7 @@
 #image-container {
     width: 400px;
     height: 400px;
-    overflow: auto;
+    overflow: hidden;
     touch-action: none; /* 禁用瀏覽器默認手勢操作 */
     border: 3px solid black; /* 黑色外框 */
     background: #fff;
@@ -21,10 +21,7 @@
 }
 
 #image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
+    position: relative;
     transform-origin: center;
     touch-action: none;
     user-select: none;
@@ -45,7 +42,7 @@ button {
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
-    background-color: #007BFF;
+    background-color: #FFFFFF;
     color: white;
     border: none;
     border-radius: 5px;
