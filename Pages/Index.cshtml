@@ -1,0 +1,30 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "圖片操作";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+    <div id="image-container">
+        <img id="image" src="..\img\report.png" alt="可操作圖片" />
+    </div>
+
+    <div id="controls">
+        <button id="flip-vertical">上下翻轉</button>
+        <button id="flip-horizontal">左右翻轉</button>
+        <button id="rotate">旋轉</button>
+        <div id="rotate-slider-container" style="display: none;">
+            <input id="rotate-slider" type="range" min="0" max="360" value="0" />
+        </div>
+    </div>
+
+    <script src="js/scripts.js"></script>
+</body>
+</html>
