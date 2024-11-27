@@ -95,33 +95,23 @@ completeBtn.addEventListener('click', () => {
     canvas.width = container.offsetWidth;
     canvas.height = container.offsetHeight;
 
-    //const containerRect = container.getBoundingClientRect();
-    //const imageRect = image.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
+    const imageRect = image.getBoundingClientRect();
 
-    // 获取当前图片的位置与变换
-    const matrix = new DOMMatrix();
-    matrix.translateSelf(image.offsetLeft, image.offsetTop); // 位置
-    matrix.rotateSelf(rotateAngle); // 旋转
-    matrix.scaleSelf(flipHorizontal, flipVertical); // 翻转
+    //计算图片相对擷取框的位置
+    const dx = (imageRect.left - containerRect.left);
+    const dy = (imageRect.top - containerRect.top);
+    const dWidth = imageRect.width;
+    const dHeight = imageRect.height;
 
-    // 将图像绘制到 canvas 上
-    ctx.setTransform(matrix);
-    ctx.drawImage(image, 0, 0);
-
-    // 计算图片相对擷取框的位置
-    //const dx = (imageRect.left - containerRect.left) / scale;
-    //const dy = (imageRect.top - containerRect.top) / scale;
-    //const dWidth = imageRect.width / scale;
-    //const dHeight = imageRect.height / scale;
-
-    // 应用旋转
+    //应用旋转
     //ctx.translate(canvas.width / 2, canvas.height / 2);
-    //ctx.scale(flipHorizontal, flipVertical);
-    //ctx.rotate((rotateAngle * Math.PI) / 180);
+    ctx.scale(flipHorizontal, flipVertical);
+    ctx.rotate((rotateAngle * Math.PI) / 180);
     //ctx.translate(-canvas.width / 2, -canvas.height / 2);
 
-    // 绘制图片
-    //ctx.drawImage(image, dx, dy, dWidth, dHeight);
+    //绘制图片
+    ctx.drawImage(image, dx, dy, dWidth, dHeight, 0, 0, 400, 400);
 
     // 导出图片
     const dataUrl = canvas.toDataURL('image/png');
