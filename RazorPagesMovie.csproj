@@ -14,11 +14,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\js\scripts.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="img\report.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="NewFolder1\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\js\scripts.js" />
   </ItemGroup>
 
   <ItemGroup>

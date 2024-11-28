@@ -1,4 +1,4 @@
-﻿const container = document.getElementById("image-container")
+﻿const container = document.getElementById("image-container");
 let image = document.getElementById("image");
 
 let scale = 1; // 缩放比例
@@ -8,6 +8,8 @@ let startX = 0, startY = 0; // 上次图片位置
 let rotateAngle = 0;
 let flipHorizontal = 1; // 水平翻转，1 为正常，-1 为翻转
 let flipVertical = 1; // 垂直翻转，1 为正常，-1 为翻转
+let flippedH = false;
+let flippedV = false;
 let startTouches = []; // 开始触控点
 
 // 手勢處理
@@ -61,12 +63,14 @@ container.addEventListener('touchend', () => {
 
 // 上下翻轉
 document.getElementById("flip-vertical").addEventListener("click", () => {
+    flippedV = !flippedV;
     flipVertical *= -1; // 切换垂直翻转状态
     updateImageTransform();
 });
 
 // 左右翻轉
 document.getElementById("flip-horizontal").addEventListener("click", () => {
+    flippedH = !flippedH;
     flipHorizontal *= -1; // 切换水平翻转状态
     updateImageTransform();
 });
@@ -98,20 +102,30 @@ completeBtn.addEventListener('click', () => {
     const containerRect = container.getBoundingClientRect();
     const imageRect = image.getBoundingClientRect();
 
+    //应用旋转
+    ctx.translate(canvas.width / 2, canvas.height / 2);
+    ctx.scale(flipHorizontal, flipVertical);
+    ctx.rotate((rotateAngle * Math.PI) / 180);
+    ctx.translate(-canvas.width / 2, -canvas.height / 2);
+
     //计算图片相对擷取框的位置
-    const dx = (imageRect.left - containerRect.left);
-    const dy = (imageRect.top - containerRect.top);
+    let dx = 0;
+    if (flippedH === false) {
+        dx = (imageRect.left - containerRect.left);
+    } else {
+        dx = (containerRect.right - imageRect.right);
+    }
+    let dy = 0;
+    if (flippedV === false) {
+        dy = (imageRect.top - containerRect.top);
+    } else {
+        dy = (containerRect.bottom - imageRect.bottom);
+    }
     const dWidth = imageRect.width;
     const dHeight = imageRect.height;
 
-    //应用旋转
-    //ctx.translate(canvas.width / 2, canvas.height / 2);
-    ctx.scale(flipHorizontal, flipVertical);
-    ctx.rotate((rotateAngle * Math.PI) / 180);
-    //ctx.translate(-canvas.width / 2, -canvas.height / 2);
-
     //绘制图片
-    ctx.drawImage(image, dx, dy, dWidth, dHeight, 0, 0, 400, 400);
+    ctx.drawImage(image, dx, dy, dWidth, dHeight);
 
     // 导出图片
     const dataUrl = canvas.toDataURL('image/png');

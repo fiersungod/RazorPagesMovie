@@ -14,7 +14,7 @@
     height: 400px;
     overflow: hidden;
     touch-action: none; /* 禁用瀏覽器默認手勢操作 */
-    border: 3px solid black; /* 黑色外框 */
+    border: 3px solid white;
     background: #fff;
     position: relative; /* 保持图片移动绝对定位的基础 */
     z-index: 10; /* 保证容器在顶层 */
