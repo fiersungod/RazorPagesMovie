@@ -101,11 +101,11 @@ completeBtn.addEventListener('click', () => {
 
     const containerRect = container.getBoundingClientRect();
     const imageRect = image.getBoundingClientRect();
-
+    const rad = (rotateAngle * Math.PI) / 180;
     //应用旋转
     ctx.translate(canvas.width / 2, canvas.height / 2);
     ctx.scale(flipHorizontal, flipVertical);
-    ctx.rotate((rotateAngle * Math.PI) / 180);
+    ctx.rotate(rad);
     ctx.translate(-canvas.width / 2, -canvas.height / 2);
 
     //计算图片相对擷取框的位置
@@ -121,8 +121,8 @@ completeBtn.addEventListener('click', () => {
     } else {
         dy = (containerRect.bottom - imageRect.bottom);
     }
-    const dWidth = imageRect.width;
-    const dHeight = imageRect.height;
+    const dWidth = (imageRect.width * Math.abs(Math.cos(rad))) + (imageRect.height * Math.abs(Math.sin(rad)));
+    const dHeight = (imageRect.height * Math.abs(Math.cos(rad))) + (imageRect.width * Math.abs(Math.sin(rad)));
 
     //绘制图片
     ctx.drawImage(image, dx, dy, dWidth, dHeight);
