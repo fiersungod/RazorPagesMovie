@@ -1,4 +1,8 @@
-﻿const container = document.getElementById("image-container");
+﻿//import Canvas2Image from './canvas2image';
+//import html2canvas from './html2canvas';
+//import domtoimage from 'dom-to-image';
+
+const container = document.getElementById("image-container");
 let image = document.getElementById("image");
 
 let scale = 1; // 缩放比例
@@ -92,6 +96,23 @@ rotateSlider.addEventListener("input", (e) => {
 });
 
 completeBtn.addEventListener('click', () => {
+    /*const dataUri = await domtoimage.toPng(document.getElementById("image-container")).then(dataUrl => dataUrl);
+
+    // 下載圖片
+    const link = document.createElement('a');
+    const filename = 'Demo.png';
+    link.download = filename;
+    link.href = dataUri;
+    link.click();
+    /*html2canvas(document.getElementById("image-container")).then(canvas => {
+        const filename = 'xxxxx';
+        Canvas2Image.saveAsPNG(
+            canvas,
+            canvas.width, canvas.height,
+            filename
+        );
+    });
+    
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
 
@@ -110,19 +131,35 @@ completeBtn.addEventListener('click', () => {
 
     //计算图片相对擷取框的位置
     let dx = 0;
-    if (flippedH === false) {
-        dx = (imageRect.left - containerRect.left);
-    } else {
-        dx = (containerRect.right - imageRect.right);
-    }
     let dy = 0;
-    if (flippedV === false) {
-        dy = (imageRect.top - containerRect.top);
-    } else {
-        dy = (containerRect.bottom - imageRect.bottom);
+    if (rad < Math.PI / 2) {
+        if (flippedH === false) {
+            dx = ((imageRect.left - containerRect.left) * Math.abs(Math.cos(rad))) + ((imageRect.top - containerRect.top) * Math.abs(Math.sin(rad)));
+        } else {
+            dx = ((containerRect.right - imageRect.right) * Math.abs(Math.cos(rad))) + ((containerRect.bottom - imageRect.bottom) * Math.abs(Math.sin(rad)));
+        }
+        if (flippedV === false) {
+            dy = ((imageRect.top - containerRect.top) * Math.abs(Math.cos(rad))) + ((containerRect.right - imageRect.right) * Math.abs(Math.sin(rad)));
+        } else {
+            dy = ((containerRect.bottom - imageRect.bottom) * Math.abs(Math.sin(rad))) + ((containerRect.left - imageRect.left) * Math.abs(Math.cos(rad)));
+        }
+    }
+    else if (rad < Math.PI) {
+        if (flippedH === false) {
+            dx = ((containerRect.right - imageRect.right) * Math.abs(Math.cos(rad))) + ((containerRect.bottom - imageRect.bottom) * Math.abs(Math.sin(rad)));
+        } else {
+            dx = ((imageRect.left - containerRect.left) * Math.abs(Math.cos(rad))) + ((imageRect.top - containerRect.top) * Math.abs(Math.sin(rad)));
+        }
+        if (flippedV === false) {
+            dy = ((containerRect.bottom - imageRect.bottom) * Math.abs(Math.cos(rad))) + ((containerRect.right - imageRect.right) * Math.abs(Math.sin(rad)));
+        } else {
+            dy = ((imageRect.top - containerRect.top) * Math.abs(Math.sin(rad))) + ((containerRect.right - imageRect.right) * Math.abs(Math.cos(rad)));
+        }
     }
     const dWidth = (imageRect.width * Math.abs(Math.cos(rad))) + (imageRect.height * Math.abs(Math.sin(rad)));
     const dHeight = (imageRect.height * Math.abs(Math.cos(rad))) + (imageRect.width * Math.abs(Math.sin(rad)));
+    //const dWidth = imageRect.width;
+    //const dHeight = imageRect.height;
 
     //绘制图片
     ctx.drawImage(image, dx, dy, dWidth, dHeight);
@@ -132,7 +169,7 @@ completeBtn.addEventListener('click', () => {
     const link = document.createElement('a');
     link.href = dataUrl;
     link.download = 'captured-image.png';
-    link.click();
+    link.click();*/
 });
 
 function updateImageTransform() {
