@@ -111,7 +111,7 @@ completeBtn.addEventListener('click', () => {
             canvas.width, canvas.height,
             filename
         );
-    });
+    });*/
     
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
@@ -169,7 +169,7 @@ completeBtn.addEventListener('click', () => {
     const link = document.createElement('a');
     link.href = dataUrl;
     link.download = 'captured-image.png';
-    link.click();*/
+    link.click();
 });
 
 function updateImageTransform() {
