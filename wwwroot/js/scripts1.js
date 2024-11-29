@@ -1,5 +1,6 @@
 ﻿const container = document.getElementById("image-container");
 let image = document.getElementById("image");
+let Himage = document.getElementById("hidden-image");
 
 let scale = 1; // 缩放比例
 let startScale = 1; // 上次缩放的比例
@@ -98,47 +99,51 @@ completeBtn.addEventListener('click', () => {
     // 设置 canvas 大小与擷取框一致
     canvas.width = container.offsetWidth;
     canvas.height = container.offsetHeight;
-
     const containerRect = container.getBoundingClientRect();
     const imageRect = image.getBoundingClientRect();
     const rad = (rotateAngle * Math.PI) / 180;
+
+    //const dWidth = (imageRect.width * Math.abs(Math.cos(rad))) + (imageRect.height * Math.abs(Math.sin(rad)));
+    //const dHeight = (imageRect.height * Math.abs(Math.cos(rad))) + (imageRect.width * Math.abs(Math.sin(rad)));
+    const dWidth = Himage.naturalWidth*scale;
+    const dHeight = Himage.naturalHeight*scale;
+    //canvas.width = imageRect.width;
+    //canvas.height = imageRect.height;
+
     //应用旋转
-    ctx.translate(canvas.width / 2, canvas.height / 2);
+    //ctx.translate(canvas.width / 2, canvas.height / 2);
     ctx.scale(flipHorizontal, flipVertical);
     ctx.rotate(rad);
-    ctx.translate(-canvas.width / 2, -canvas.height / 2);
+    //ctx.translate(-canvas.width / 2, -canvas.height / 2);
 
     //计算图片相对擷取框的位置
     let dx = 0;
     let dy = 0;
-    if (rad < Math.PI / 2) {
+    //if (rad < Math.PI / 2) {
         if (flippedH === false) {
-            dx = ((imageRect.left - containerRect.left) * Math.abs(Math.cos(rad))) + ((imageRect.top - containerRect.top) * Math.abs(Math.sin(rad)));
+            dx = imageRect.left - containerRect.left;
         } else {
             dx = ((containerRect.right - imageRect.right) * Math.abs(Math.cos(rad))) + ((containerRect.bottom - imageRect.bottom) * Math.abs(Math.sin(rad)));
         }
         if (flippedV === false) {
-            dy = ((imageRect.top - containerRect.top) * Math.abs(Math.cos(rad))) + ((containerRect.right - imageRect.right) * Math.abs(Math.sin(rad)));
+            dy = imageRect.top - containerRect.top;
         } else {
             dy = ((containerRect.bottom - imageRect.bottom) * Math.abs(Math.sin(rad))) + ((containerRect.left - imageRect.left) * Math.abs(Math.cos(rad)));
         }
-    }
-    else if (rad < Math.PI) {
-        if (flippedH === false) {
-            dx = ((containerRect.right - imageRect.right) * Math.abs(Math.cos(rad))) + ((containerRect.bottom - imageRect.bottom) * Math.abs(Math.sin(rad)));
-        } else {
-            dx = ((imageRect.left - containerRect.left) * Math.abs(Math.cos(rad))) + ((imageRect.top - containerRect.top) * Math.abs(Math.sin(rad)));
-        }
-        if (flippedV === false) {
-            dy = ((containerRect.bottom - imageRect.bottom) * Math.abs(Math.cos(rad))) + ((containerRect.right - imageRect.right) * Math.abs(Math.sin(rad)));
-        } else {
-            dy = ((imageRect.top - containerRect.top) * Math.abs(Math.sin(rad))) + ((containerRect.right - imageRect.right) * Math.abs(Math.cos(rad)));
-        }
-    }
-    const dWidth = (imageRect.width * Math.cos(rad)) + (imageRect.height * Math.sin(rad));
-    const dHeight = (imageRect.height * Math.cos(rad)) + (imageRect.width * Math.sin(rad));
-    //const dWidth = imageRect.width;
-    //const dHeight = imageRect.height;
+    //}
+    //else if (rad < Math.PI) {
+    //    if (flippedH === false) {
+    //        dx = ((containerRect.right - imageRect.right) * Math.abs(Math.cos(rad))) + ((containerRect.bottom - imageRect.bottom) * Math.abs(Math.sin(rad)));
+    //    } else {
+    //        dx = ((imageRect.left - containerRect.left) * Math.abs(Math.cos(rad))) + ((imageRect.top - containerRect.top) * Math.abs(Math.sin(rad)));
+    //    }
+    //    if (flippedV === false) {
+    //        dy = ((containerRect.bottom - imageRect.bottom) * Math.abs(Math.cos(rad))) + ((containerRect.right - imageRect.right) * Math.abs(Math.sin(rad)));
+    //    } else {
+    //        dy = ((imageRect.top - containerRect.top) * Math.abs(Math.sin(rad))) + ((containerRect.right - imageRect.right) * Math.abs(Math.cos(rad)));
+    //    }
+    //}
+    
 
     //绘制图片
     ctx.drawImage(image, dx, dy, dWidth, dHeight);

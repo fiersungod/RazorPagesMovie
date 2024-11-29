@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model IndexModel
 @{
     ViewData["Title"] = "圖片操作";
@@ -100,8 +100,7 @@
 </head>
 <body>
     <div id="image-container">
-        <img id="image" src="..\img\report.png" alt="可操作圖片" />
-        <img id="hidden-image" src="..\img\report.png" alt="可操作圖片" />
+        <img crossorigin="anonymous" id="image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Cat_August_2010-4.jpg/1200px-Cat_August_2010-4.jpg" alt="可操作圖片" />
     </div>
 
     <div id="controls">
@@ -114,6 +113,8 @@
         <button id="complete-btn">完成</button>
     </div>
 
-    <script src="js/finalScripts.js"></script>
+
+    <canvas id="canvasHidden"></canvas>
+    <script src="js/scripts.js"></script>
 </body>
 </html>

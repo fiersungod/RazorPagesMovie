@@ -1,4 +1,8 @@
-﻿const container = document.getElementById("image-container");
+//import Canvas2Image from './canvas2image';
+//import html2canvas from './html2canvas';
+//import domtoimage from 'dom-to-image';
+
+const container = document.getElementById("image-container");
 let image = document.getElementById("image");
 
 let scale = 1; // 缩放比例
@@ -92,63 +96,18 @@ rotateSlider.addEventListener("input", (e) => {
 });
 
 completeBtn.addEventListener('click', () => {
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-
-    // 设置 canvas 大小与擷取框一致
-    canvas.width = container.offsetWidth;
-    canvas.height = container.offsetHeight;
-
-    const containerRect = container.getBoundingClientRect();
-    const imageRect = image.getBoundingClientRect();
-    const rad = (rotateAngle * Math.PI) / 180;
-    //应用旋转
-    ctx.translate(canvas.width / 2, canvas.height / 2);
-    ctx.scale(flipHorizontal, flipVertical);
-    ctx.rotate(rad);
-    ctx.translate(-canvas.width / 2, -canvas.height / 2);
-
-    //计算图片相对擷取框的位置
-    let dx = 0;
-    let dy = 0;
-    if (rad < Math.PI / 2) {
-        if (flippedH === false) {
-            dx = ((imageRect.left - containerRect.left) * Math.abs(Math.cos(rad))) + ((imageRect.top - containerRect.top) * Math.abs(Math.sin(rad)));
-        } else {
-            dx = ((containerRect.right - imageRect.right) * Math.abs(Math.cos(rad))) + ((containerRect.bottom - imageRect.bottom) * Math.abs(Math.sin(rad)));
-        }
-        if (flippedV === false) {
-            dy = ((imageRect.top - containerRect.top) * Math.abs(Math.cos(rad))) + ((containerRect.right - imageRect.right) * Math.abs(Math.sin(rad)));
-        } else {
-            dy = ((containerRect.bottom - imageRect.bottom) * Math.abs(Math.sin(rad))) + ((containerRect.left - imageRect.left) * Math.abs(Math.cos(rad)));
-        }
-    }
-    else if (rad < Math.PI) {
-        if (flippedH === false) {
-            dx = ((containerRect.right - imageRect.right) * Math.abs(Math.cos(rad))) + ((containerRect.bottom - imageRect.bottom) * Math.abs(Math.sin(rad)));
-        } else {
-            dx = ((imageRect.left - containerRect.left) * Math.abs(Math.cos(rad))) + ((imageRect.top - containerRect.top) * Math.abs(Math.sin(rad)));
-        }
-        if (flippedV === false) {
-            dy = ((containerRect.bottom - imageRect.bottom) * Math.abs(Math.cos(rad))) + ((containerRect.right - imageRect.right) * Math.abs(Math.sin(rad)));
-        } else {
-            dy = ((imageRect.top - containerRect.top) * Math.abs(Math.sin(rad))) + ((containerRect.right - imageRect.right) * Math.abs(Math.cos(rad)));
-        }
-    }
-    const dWidth = (imageRect.width * Math.cos(rad)) + (imageRect.height * Math.sin(rad));
-    const dHeight = (imageRect.height * Math.cos(rad)) + (imageRect.width * Math.sin(rad));
-    //const dWidth = imageRect.width;
-    //const dHeight = imageRect.height;
-
-    //绘制图片
-    ctx.drawImage(image, dx, dy, dWidth, dHeight);
-
-    // 导出图片
-    const dataUrl = canvas.toDataURL('image/png');
-    const link = document.createElement('a');
-    link.href = dataUrl;
-    link.download = 'captured-image.png';
-    link.click();
+  html2canvas(document.getElementById("image-container"),{
+    allowTaint : true,
+    useCORS: true,
+    scale:1
+  }).then(canvas => {
+      const filename = 'xxxxx';
+      Canvas2Image.saveAsPNG(
+          canvas,
+          canvas.width, canvas.height,
+          filename
+      );
+  });
 });
 
 function updateImageTransform() {
